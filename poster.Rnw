@@ -1,0 +1,90 @@
+\documentclass[final]{beamer} % beamer 3.10: do NOT use option hyperref={pdfpagelabels=false} !
+  %\documentclass[final,hyperref={pdfpagelabels=false}]{beamer} % beamer 3.07: get rid of beamer warnings
+  \mode<presentation> { \usetheme{UFPoster} }
+  \usepackage[english]{babel}
+  \usepackage[latin1]{inputenc}
+  \usepackage{amsmath,amsthm, amssymb, latexsym, todonotes}
+  \usefonttheme[onlymath]{serif}
+  \boldmath
+  \usepackage[orientation=portrait,size=custom,height=114,width=114,scale=1,debug]{beamerposter}                       % e.g. for DIN-A0 poster
+  \title{VALIDATING APPROACHES TO DETECTING HIDDEN SOCIAL GROUPS}
+  \author{Carl A. B. Pearson\textsuperscript{1}, Burton H. Singer\textsuperscript{1}}
+  \institute[EPI-UF]{\textsuperscript{1}Emerging Pathogens Institute, University of Florida}
+  \date{\today}
+  \newcommand{\spaceProp}{0.01}
+  \newcommand{\spacer}{\begin{column}{\spaceProp\paperwidth}\end{column}}
+
+  \newenvironment{oneCol}{\begin{column}[t]{0.34\paperwidth}}{\end{column}}
+  \newenvironment{threeCol}{\begin{column}[t]{0.62\paperwidth}}{\end{column}}
+  \setbeamertemplate{caption}[numbered]
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+  \begin{frame}{}
+    \begin{columns}[t]
+    \spacer{}
+    \begin{oneCol}
+
+    \begin{block}{MOTIVATION}
+In many scientific pursuits, the principle agents driving the observed phenomena are hidden.
+When human behavior is involved, the hiding may be either incidental
+(e.g., clinical immune chronic malaria carriers) or deliberate.  But, since these people are
+key to intervening, we really want to find them.  So called "big data" approaches are held
+out as means to identify them.  How can we distinguish between when such approaches are
+genuinely successful rather than lucky?
+    \end{block}
+    \vspace{.5cm}
+    \begin{block}{HOW DO COVERT GROUPS BEHAVE?}
+No one knows for certain: this is why they are called covert.  We can safely assume that their
+behavior is "like" that of most people, with some behavior they conceal to some extent.
+If we suppose some mechanism and rate of that covert behavior, then we can describe how it would
+manifest in some observation of the general population.
+    \end{block}
+
+    \begin{block}{METHOD FOR ASSESSING DETECTION SCHEMES}
+use some empirical data set concerning the target general population, introduce covert groups.
+
+steps for introducing covert group
+\begin{itemize}
+ \item start with some assumptions about the people we're going to see in system:
+ up in there for a while, try to behave like regular people, some times don't
+ \item filter for stable parts of the data, users + locations
+ \item for what remains, look at locations - categorize them
+ \item then look at users, what kind of locations they tend to use
+ \item finally, pick one and use for template for covert group members:
+ randomly draw real person from group, and using their distribution of location types,
+ sample those location types for the group members locations
+\end{itemize}
+    \end{block}
+
+    \begin{block}{DATA}
+Montreal wifi.  BASIC STATISTICS
+    \end{block}
+
+    \end{oneCol}
+    \spacer{}
+    \begin{threeCol}
+
+    \begin{block}{Results}
+    \begin{figure}\centering
+    \missingfigure{show background distillation plots}
+    \caption{those silly canadians, and features of their deal}
+    \end{figure}
+    \begin{figure}\centering
+    \missingfigure{show detection plots}
+    \caption{those silly terrorist-canadians, and detectability sensitivies}
+    \end{figure}
+
+    \end{block}
+
+    \begin{block}{Conclusions}
+    Detection is hard.
+    \end{block}
+  \begin{block}{References}
+    \footnotesize{\bibliographystyle{unsrt}
+    \bibliography{biblio}\vspace{0.75in}}
+  \end{block}
+\end{threeCol}
+\spacer{}
+\end{columns}
+\end{frame}
+\end{document}
