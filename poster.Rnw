@@ -8,14 +8,15 @@
   \boldmath
   \usepackage[orientation=portrait,size=custom,height=114,width=114,scale=1,debug]{beamerposter}                       % e.g. for DIN-A0 poster
   \title{VALIDATING APPROACHES TO DETECTING HIDDEN SOCIAL GROUPS}
+  \subtitle{contact \texttt{cap10@epi.ufl.edu} about this poster \texttt{https://github.com/pearsonca/epi\_research\_day2016}}
   \author{Carl A. B. Pearson\textsuperscript{1}, Burton H. Singer\textsuperscript{1}}
   \institute[EPI-UF]{\textsuperscript{1}Emerging Pathogens Institute, University of Florida}
   \date{\today}
   \newcommand{\spaceProp}{0.01}
   \newcommand{\spacer}{\begin{column}{\spaceProp\paperwidth}\end{column}}
 
-  \newenvironment{oneCol}{\begin{column}[t]{0.34\paperwidth}}{\end{column}}
-  \newenvironment{threeCol}{\begin{column}[t]{0.62\paperwidth}}{\end{column}}
+  \newenvironment{oneCol}{\begin{column}[t]{0.24\paperwidth}}{\end{column}}
+  \newenvironment{threeCol}{\begin{column}[t]{0.74\paperwidth}}{\end{column}}
   \setbeamertemplate{caption}[numbered]
 \begin{document}
 \SweaveOpts{concordance=TRUE}
@@ -25,53 +26,62 @@
     \begin{oneCol}
 
     \begin{block}{MOTIVATION}
-In many scientific pursuits, the principle agents driving the observed phenomena are hidden.
-When human behavior is involved, the hiding may be either incidental
-(e.g., clinical immune chronic malaria carriers) or deliberate.  But, since these people are
-key to intervening, we really want to find them.  So called "big data" approaches are held
-out as means to identify them.  How can we distinguish between when such approaches are
-genuinely successful rather than lucky?
+In infectious disease epidemiology, the \textbf{agents driving observed outcomes may themselves be unobserved}.
+They may be censored by simple scientific practicality or ethicality, but since behavior is involved, their \textbf{missing-ness may deliberate} rather than just incidental.  Consider people's distrust of government during the Ebola outbreak, or the social stigma associated with homosexuality and HIV.
+
+These \textbf{covert individuals may be key to understanding} a system.  \textbf{``Big data'' approaches may help find them}, whether deliberately or incidentally missing, but such tactics are susceptible false positives so we \textbf{need to distinguish between success and luck}.
     \end{block}
     \vspace{.5cm}
-    \begin{block}{HOW DO COVERT GROUPS BEHAVE?}
-No one knows for certain: this is why they are called covert.  We can safely assume that their
-behavior is "like" that of most people, with some behavior they conceal to some extent.
-If we suppose some mechanism and rate of that covert behavior, then we can describe how it would
-manifest in some observation of the general population.
+    \begin{block}{DETECTING COVERT BEHAVIOR}
+We \textbf{do not know the behavior of covert groups} by definition, and we do not generally know who is or isn't hiding in a particular dataset.  However, we can consider the detectability of types hidden groups in some dataset by \textbf{simulating those groups, adding them to the data, and applying the detection procedure}.  That approach assumes groups that participate in whatever activity produces the dataset -- i.e., they do not hide by being non-participants -- which is similar to the background and dominates their activity.  But these groups also have behavior because they are members of this group, and the challenge is to detect them based on that differentiating behavior.
     \end{block}
-
-    \begin{block}{METHOD FOR ASSESSING DETECTION SCHEMES}
-use some empirical data set concerning the target general population, introduce covert groups.
-
-steps for introducing covert group
-\begin{itemize}
- \item start with some assumptions about the people we're going to see in system:
- up in there for a while, try to behave like regular people, some times don't
- \item filter for stable parts of the data, users + locations
- \item for what remains, look at locations - categorize them
- \item then look at users, what kind of locations they tend to use
- \item finally, pick one and use for template for covert group members:
- randomly draw real person from group, and using their distribution of location types,
- sample those location types for the group members locations
-\end{itemize}
-    \end{block}
-
-    \begin{block}{DATA}
-Montreal wifi.  BASIC STATISTICS
-    \end{block}
-
-    \end{oneCol}
+\end{oneCol}
     \spacer{}
     \begin{threeCol}
+\begin{columns}[t]
+\begin{column}{.33\linewidth}
+\begin{block}{COVERT GROUP}
+\begin{enumerate}
+\item categorize background population by their activity (see fig. X for categorization axes)
+\item select a background group as a template
+\item create a population, size $N$, which each member from that template
+\item define covert group interactions for that population
+\item simulate covert group "normal" and "covert" events
+\item synthesize background and simulated events
+\end{enumerate}
+    \begin{figure}\centering
+    \missingfigure{background population categorization}
+    \caption{Users in the Montreal Municipal Wifi, by location preference and activity level.  Example synthetic users in XYZ.}
+    \end{figure}
+\end{block}
+\end{column}
+\begin{column}{.33\linewidth}
+\begin{block}{DETECTION}
+For this analysis, we assess whether a traditional social network community detection approach will find the covert group.
+\begin{enumerate}
+\item divide the synthesized data set into time intervals
+\item during each time interval, compute the optimal community structure using the fast-greedy heuristic
+\item score based on persistent group structure, decaying over time
+\end{enumerate}
+    \begin{figure}\centering
+    \missingfigure{diagram}
+    \caption{diagram of detection process}
+    \end{figure}
+\end{block}
+\end{column}
+\begin{column}{.33\linewidth}
+\begin{block}{ANALYSIS}
+Any given detection method will entail sensitivity and specificity statistics, determinable since the covert group identity is known.  Using these, we can calculate the receiver-operator characteristic.
+
+TODO equation for ROC in this particular setting.
+\end{block}
+\end{column}
+\end{columns}
 
     \begin{block}{Results}
     \begin{figure}\centering
-    \missingfigure{show background distillation plots}
-    \caption{those silly canadians, and features of their deal}
-    \end{figure}
-    \begin{figure}\centering
-    \missingfigure{show detection plots}
-    \caption{those silly terrorist-canadians, and detectability sensitivies}
+    \missingfigure{show facets of detection plots - facet by sample}
+    \caption{these 3-4 plots show sample results}
     \end{figure}
 
     \end{block}

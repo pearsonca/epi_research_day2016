@@ -38,7 +38,7 @@
 
 % footline colors and fonts
 \setbeamercolor{footline}{fg=ufblue,bg=white}
-\setbeamerfont{footline}{fg=ufblue, size=\normalsize}
+\setbeamerfont{footline}{size=\normalsize} % fg=ufblue
 
 % body colors and fonts
 \setbeamercolor*{normal text}{fg=ufblue,bg=white}
@@ -51,7 +51,7 @@
 
 % example environment
 \setbeamercolor*{example title}{fg=ufblue,fg=white}
-\setbeamerfont{example title}{size=\Huge,series=\bf,fg=ufblue,fg=white}
+\setbeamerfont{example title}{size=\Huge,series=\bf} %,fg=ufblue,fg=white
 
 
 %\setbeamercolor*{example body}{fg=white,bg=i6bluescheme4}
@@ -130,10 +130,10 @@
   \end{beamercolorbox}
   
   \begin{beamercolorbox}[ht=1.5\baselineskip]{footline}%
-    \hfill this poster: {\tt https://github.com/pearsonca/mmed2015poster/tree/epidemics5} -- for interactive version, see {\tt master} branch -- contact \texttt{cap10@epi.ufl.edu} \hfill
+    \hfill{} \insertsubtitle{} \hfill{}
    \end{beamercolorbox}
 
-  \begin{beamercolorbox}[wd=\paperwidth]{lower separation line foot}
+  \begin{beamercolorbox}[wd=\paperwidth,ht=.5\baselineskip]{lower separation line foot}
     \rule{0pt}{2pt}
   \end{beamercolorbox}
 }
