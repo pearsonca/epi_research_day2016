@@ -7,7 +7,7 @@
   \usepackage{amsmath,amsthm, amssymb, latexsym, todonotes}
   \usefonttheme[onlymath]{serif}
   \boldmath{}
-  \usepackage[orientation=portrait,size=custom,height=114,width=121,scale=0.9,debug]{beamerposter}                       % e.g. for DIN-A0 poster
+  \usepackage[orientation=portrait,size=custom,height=121,width=91,scale=0.9,debug]{beamerposter}                       % e.g. for DIN-A0 poster
   \title{VALIDATING APPROACHES TO DETECTING HIDDEN SOCIAL GROUPS}
   \subtitle{contact \texttt{cap10@epi.ufl.edu} about this poster \texttt{https://github.com/pearsonca/epi\_research\_day2016}}
   \author{Carl A. B. Pearson\textsuperscript{1}, Burton H. Singer\textsuperscript{1}}
@@ -45,9 +45,6 @@ For the results shown here, we considered a traditional social network analysis 
   \item all communities which are above the minimum community size (2) and below some cut-off (varied to trade-off sensitivity and specificity) are implicated as potential covert groups.
 \end{enumerate}
 \end{block}
-\begin{block}{DISCUSSION}
-Detection is hard.  We have not yet identified an approach that will reliably separate the covert members from the background population, and all approaches are computationally intensive.
-\end{block}
 
 \end{oneCol}
     \spacer{}
@@ -83,7 +80,7 @@ Any given detection method will entail sensitivity and specificity statistics, d
 
 \begin{block}{RESULTS}
   \begin{columns}
-\begin{column}{.48\linewidth}
+\begin{column}{.47\linewidth}
   \begin{figure}\centering
   \includegraphics{locationclusters.png}
   \caption{The locations in the wifi system, clustered by usage features.}
@@ -93,7 +90,7 @@ Any given detection method will entail sensitivity and specificity statistics, d
   \caption{Users in the Montreal Municipal Wifi, by location preference and activity level.}
   \end{figure}
 \end{column}
-\begin{column}{.48\linewidth}
+\begin{column}{.47\linewidth}
   \begin{figure}\centering
   \includegraphics{detection_results.png}
   \caption{Results of the proposed detection scheme applied to a synthetic group mimicing the most-typical group of the population: typical usage per time, some usage variability, tending to towards mid day usage (center panel fig. 2, green dots).  Members of the covert group additionally meet roughly once per week in a single location, of the type preferred by the population they are mimicing.  As should be clear, these individuals are not detectable at all.}
@@ -101,7 +98,9 @@ Any given detection method will entail sensitivity and specificity statistics, d
 \end{column}
 \end{columns}
     \end{block}
-
+\begin{block}{DISCUSSION}
+Detection is hard.  We have not yet identified an approach that will reliably separate the covert members from the background population, and all approaches are computationally intensive.  Some group configurations seem detectable, but we have not yet identified particular distinguishing features.
+\end{block}
   \begin{block}{References}
 
     \footnotesize{\nocite{*}\bibliographystyle{unsrt}
