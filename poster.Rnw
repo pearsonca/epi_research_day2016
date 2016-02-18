@@ -1,12 +1,13 @@
 \documentclass[final]{beamer} % beamer 3.10: do NOT use option hyperref={pdfpagelabels=false} !
   %\documentclass[final,hyperref={pdfpagelabels=false}]{beamer} % beamer 3.07: get rid of beamer warnings
   \mode<presentation> { \usetheme{UFPoster} }
+  \usepackage{multicol}
   \usepackage[english]{babel}
   \usepackage[latin1]{inputenc}
   \usepackage{amsmath,amsthm, amssymb, latexsym, todonotes}
   \usefonttheme[onlymath]{serif}
-  \boldmath
-  \usepackage[orientation=portrait,size=custom,height=114,width=114,scale=1,debug]{beamerposter}                       % e.g. for DIN-A0 poster
+  \boldmath{}
+  \usepackage[orientation=portrait,size=custom,height=114,width=121,scale=0.9,debug]{beamerposter}                       % e.g. for DIN-A0 poster
   \title{VALIDATING APPROACHES TO DETECTING HIDDEN SOCIAL GROUPS}
   \subtitle{contact \texttt{cap10@epi.ufl.edu} about this poster \texttt{https://github.com/pearsonca/epi\_research\_day2016}}
   \author{Carl A. B. Pearson\textsuperscript{1}, Burton H. Singer\textsuperscript{1}}
@@ -16,7 +17,7 @@
   \newcommand{\spacer}{\begin{column}{\spaceProp\paperwidth}\end{column}}
 
   \newenvironment{oneCol}{\begin{column}[t]{0.24\paperwidth}}{\end{column}}
-  \newenvironment{threeCol}{\begin{column}[t]{0.74\paperwidth}}{\end{column}}
+  \newenvironment{threeCol}{\begin{column}[t]{0.73\paperwidth}}{\end{column}}
   \setbeamertemplate{caption}[numbered]
 \begin{document}
 \SweaveOpts{concordance=TRUE}
@@ -25,73 +26,87 @@
     \spacer{}
     \begin{oneCol}
 
-    \begin{block}{MOTIVATION}
-In infectious disease epidemiology, the \textbf{agents driving observed outcomes may themselves be unobserved}.
-They may be censored by simple scientific practicality or ethicality, but since behavior is involved, their \textbf{missing-ness may deliberate} rather than just incidental.  Consider people's distrust of government during the Ebola outbreak, or the social stigma associated with homosexuality and HIV.
+\begin{block}{MOTIVATION}
+Detecting small, covert groups embedded in a large, similar population is a methodological challenge.  These groups actively hide in the surrounding communities.  Unless they exhibit idiosyncratic behavior, detection is impossible.  However, how much idiosyncratic behavior is required to reliably identify them is an open question.
+\end{block}
 
-These \textbf{covert individuals may be key to understanding} a system.  \textbf{``Big data'' approaches may help find them}, whether deliberately or incidentally missing, but such tactics are susceptible false positives so we \textbf{need to distinguish between success and luck}.
-    \end{block}
-    \vspace{.5cm}
-    \begin{block}{DETECTING COVERT BEHAVIOR}
-We \textbf{do not know the behavior of covert groups} by definition, and we do not generally know who is or isn't hiding in a particular dataset.  However, we can consider the detectability of types hidden groups in some dataset by \textbf{simulating those groups, adding them to the data, and applying the detection procedure}.  That approach assumes groups that participate in whatever activity produces the dataset -- i.e., they do not hide by being non-participants -- which is similar to the background and dominates their activity.  But these groups also have behavior because they are members of this group, and the challenge is to detect them based on that differentiating behavior.
-    \end{block}
+\begin{block}{DETECTION SCHEME}
+For the results shown here, we considered a traditional social network analysis approach: community identification.  After embedding the synthetic group in wifi access time series, we
+\begin{enumerate}
+  \item divide the data set into intervals (non-overlapping 30 day windows in this case)
+  \item compute the communities in each interval.  We use the fast-greedy heuristic algorithm.
+  \item for each interval $t$, record if people $i$, $j$ are in the same community ($\delta_{ij}(t)=1$) or not ($\delta_{ij}(t)=0$)
+  \item score persistent association between $i$, $j$ in an interval $t$ as
+  $$
+  S_{i,j}(t) = r\left(\delta_{ij}(t) + \sum_{n=1}^{t}\delta_{ij}(t-n)r^n\right)
+  $$
+  where $r$ is a discounting rate.  Also censor from further accumulation any $S_{i,j}(t)$ that falls below some threshold.  We use six intervals with no association ($S_{i,j}(t) < r^6$) for our threshold.
+  \item In each interval, compute \emph{persistence communities} by assigning weighted edges between $i$, $j$ with score above some level, and then using a community identification algorithm that can leverage weighted edges (we use the spinglass community).  We use the discount rate as the cutoff: i.e., people that are at least as associated as appearing together in the current interval.
+  \item all communities which are above the minimum community size (2) and below some cut-off (varied to trade-off sensitivity and specificity) are implicated as potential covert groups.
+\end{enumerate}
+\end{block}
+\begin{block}{DISCUSSION}
+Detection is hard.  We have not yet identified an approach that will reliably separate the covert members from the background population, and all approaches are computationally intensive.
+\end{block}
+
 \end{oneCol}
     \spacer{}
-    \begin{threeCol}
+\begin{threeCol}
 \begin{columns}[t]
-\begin{column}{.33\linewidth}
-\begin{block}{COVERT GROUP}
-\begin{enumerate}
-\item categorize background population by their activity (see fig. X for categorization axes)
-\item select a background group as a template
-\item create a population, size $N$, which each member from that template
-\item define covert group interactions for that population
-\item simulate covert group "normal" and "covert" events
-\item synthesize background and simulated events
-\end{enumerate}
-    \begin{figure}\centering
-    \missingfigure{background population categorization}
-    \caption{Users in the Montreal Municipal Wifi, by location preference and activity level.  Example synthetic users in XYZ.}
-    \end{figure}
-\end{block}
-\end{column}
-\begin{column}{.33\linewidth}
-\begin{block}{DETECTION}
-For this analysis, we assess whether a traditional social network community detection approach will find the covert group.
-\begin{enumerate}
-\item divide the synthesized data set into time intervals
-\item during each time interval, compute the optimal community structure using the fast-greedy heuristic
-\item score based on persistent group structure, decaying over time
-\end{enumerate}
-    \begin{figure}\centering
-    \missingfigure{diagram}
-    \caption{diagram of detection process}
-    \end{figure}
-\end{block}
-\end{column}
-\begin{column}{.33\linewidth}
-\begin{block}{ANALYSIS}
-Any given detection method will entail sensitivity and specificity statistics, determinable since the covert group identity is known.  Using these, we can calculate the receiver-operator characteristic.
+\begin{column}{.31\linewidth}
+  \begin{block}{APPROACH}
+  We want to identify relative performance of various detection strategies against different covert group scenarios.  Characterizing groups that are not detectable by our methods is particularly important.
 
-TODO equation for ROC in this particular setting.
+  We use a large empirical dataset of human activity (usage of a municipal wifi system in Montreal) as an example background population.  We demonstrate embedding a synthetic covert group into that data, and evaluate a method for detecting them.
+
+  Work so far focused on deliberately concealed criminal groups, but methods should translate to missing populations in infectious disease questions.
+  \end{block}
+\end{column}
+\begin{column}{.31\linewidth}
+\begin{block}{COVERT GROUP}
+  \begin{enumerate}
+  \item categorize background population by their activity (see fig. X for categorization axes)
+  \item select a background group as a template
+  \item create a population, size $N_C$, which each member from that template
+  \item define covert group interactions for that population
+  \item simulate covert group ``normal'' and ``covert'' events
+  \item synthesize background and simulated events
+  \end{enumerate}
+\end{block}
+\end{column}
+\begin{column}{.31\linewidth}
+\begin{block}{ANALYSIS}
+Any given detection method will entail sensitivity and specificity statistics, determinable since the covert group identity is known.  For any interval, the TPR and FPR are calculated based on: $N_C$, the number of covert members in the group; $C(t)$, the number of covert members correctly labeled in interval $t$; $N_B(t)$, the size of the background population considered in the interval (i.e., appearing in any community); and $B(t)$ the number of background individuals incorrectly labeled as covert members.  So TPR$(t)=\frac{C(t)}{N_C}$ and FPR$(t)=\frac{B(t)}{N_B(t)}$.
 \end{block}
 \end{column}
 \end{columns}
 
-    \begin{block}{Results}
-    \begin{figure}\centering
-    \missingfigure{show facets of detection plots - facet by sample}
-    \caption{these 3-4 plots show sample results}
-    \end{figure}
-
+\begin{block}{RESULTS}
+  \begin{columns}
+\begin{column}{.48\linewidth}
+  \begin{figure}\centering
+  \includegraphics{locationclusters.png}
+  \caption{The locations in the wifi system, clustered by usage features.}
+  \end{figure}
+  \begin{figure}\centering
+  \includegraphics{users.png}
+  \caption{Users in the Montreal Municipal Wifi, by location preference and activity level.}
+  \end{figure}
+\end{column}
+\begin{column}{.48\linewidth}
+  \begin{figure}\centering
+  \includegraphics{detection_results.png}
+  \caption{Results of the proposed detection scheme applied to a synthetic group mimicing the most-typical group of the population: typical usage per time, some usage variability, tending to towards mid day usage (center panel fig. 2, green dots).  Members of the covert group additionally meet roughly once per week in a single location, of the type preferred by the population they are mimicing.  As should be clear, these individuals are not detectable at all.}
+  \end{figure}
+\end{column}
+\end{columns}
     \end{block}
 
-    \begin{block}{Conclusions}
-    Detection is hard.
-    \end{block}
   \begin{block}{References}
-    \footnotesize{\bibliographystyle{unsrt}
+
+    \footnotesize{\nocite{*}\bibliographystyle{unsrt}
     \bibliography{biblio}\vspace{0.75in}}
+
   \end{block}
 \end{threeCol}
 \spacer{}
